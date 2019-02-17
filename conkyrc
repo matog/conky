@@ -1,0 +1,133 @@
+######################
+# - Conky settings - #
+######################
+update_interval 1
+total_run_times 0
+net_avg_samples 1
+cpu_avg_samples 1
+if_up_strictness link
+
+imlib_cache_size 0
+double_buffer yes
+no_buffers yes
+background yes
+
+format_human_readable
+
+#####################
+# - Text settings - #
+#####################
+#short_units yes
+use_xft yes
+xftfont Liberation Sans:size=7
+override_utf8_locale yes
+text_buffer_size 4096
+#text_buffer_size 2048
+
+#############################
+# - Window specifications - #
+#############################
+own_window_class Conky
+own_window yes
+#own_window_type normal
+own_window_type dock
+#own_window_transparent yes
+own_window_colour black
+own_window_argb_visual yes
+own_window_argb_value 100
+own_window_hints undecorated,below,sticky,skip_taskbar,skip_pager
+
+alignment bottom_right
+#gap_x 12
+#gap_x 25
+gap_y -300
+#minimum_size 182 750
+minimum_size 182 1109
+maximum_width 182
+
+default_bar_size 182 8
+
+#########################
+# - Graphics settings - #
+#########################
+draw_shades no
+draw_graph_borders no
+stippled_borders 1
+
+default_color white
+color0 white
+color1 1793d0 
+color2 white
+color3 yellow
+
+TEXT
+##############
+# - SYSTEM - #
+##############
+${voffset 70}${font Liberation Sans:style=Bold:size=8}SISTEMA $hr${font}
+${voffset 0}${color0}${font}${color}
+${goto 5}${font Liberation Sans:style=Bold:size=6}PC:${font}${alignr}${color2}${exec dmidecode -s system-product-name | cut -c 1-24}${color}
+${goto 5}${font Liberation Sans:style=Bold:size=6}CPU:${font}${alignr}${color2}${execi 1000 cat /proc/cpuinfo | grep 'model name' | sed -e 's/model name.*: //'| uniq | cut -c 1-25}${color}
+${goto 5}${font Liberation Sans:style=Bold:size=6}MB:${font}${alignr}${color2}${exec dmidecode -s baseboard-manufacturer} ${exec dmidecode -s baseboard-product-name}${color}
+#${goto 5}${font Liberation Sans:style=Bold:size=6}GPU:${font}${alignr}${color2}${exec nvidia-smi --query-gpu=gpu_name --format=csv,noheader,nounits}${color}
+
+${goto 5}${font Liberation Sans:style=Bold:size=6}KERNEL:${font}${alignr}${color2}${kernel}${color}
+${goto 5}${font Liberation Sans:style=Bold:size=6}HOST:${font}${alignr}${color2} $nodename.local${color}
+${goto 5}${font Liberation Sans:style=Bold:size=6}UPTIME:${font}${alignr}${color2}${uptime}${color}
+##################
+# - CPU/MEMORY - #
+##################
+${voffset 10}${font Liberation Sans:style=Bold:size=8}CPU / RAM $hr${font}
+${voffset 0}
+${font Liberation Sans:style=Bold:size=6}CPU ${voffset -1}${font}${color2}${goto 35}${acpitemp}°C${alignr}${color2}${cpu}%${color}
+${cpubar}
+
+${font Liberation Sans:style=Bold:size=6}RAM ${voffset -1}${font}${alignr}${color2} $mem / $memmax ${font}${alignr}${color2}$memperc% ${color}
+$membar
+
+${font Liberation Sans:style=Bold:size=6}SWAP ${voffset -1}${font}${alignr}${color2} ${swap} / ${swapmax} ${font}${alignr}${color2} ${swapperc}% ${color}
+${swapbar}
+#################
+# - PROCESSES - #
+#################
+${font Liberation Sans:style=Bold:size=8}${voffset 10}PROCESOS $hr${font}
+${voffset 12}${font Liberation Sans:bold:size=6}CPU - Nombre del Proceso${font}
+${color2}${font Liberation Sans:size=6}${voffset -2} ${top name 1}${alignr}${top cpu 1}%
+ ${top name 2}${alignr}${top cpu 2}%
+ ${top name 3}${alignr}${top cpu 3}%
+ ${top name 4}${alignr}${top cpu 4}%
+ ${top name 5}${alignr}${top cpu 5}%
+ ${top name 6}${alignr}${top cpu 6}%${font}${color}
+${voffset 12}${font Liberation Sans:bold:size=6}RAM - Nombre del Proceso${font}
+${color2}${font Liberation Sans:size=6}${voffset -2} ${top_mem name 1}${alignr}${top_mem mem_res 1}
+ ${top_mem name 2}${alignr}${top_mem mem_res 2}
+ ${top_mem name 3}${alignr}${top_mem mem_res 3}
+ ${top_mem name 4}${alignr}${top_mem mem_res 4}
+ ${top_mem name 5}${alignr}${top_mem mem_res 5}
+ ${top_mem name 6}${alignr}${top_mem mem_res 6}${font}${color}
+
+${voffset 0}${font Liberation Sans:Bold:size=6}Total: ${color2}$processes${color}${alignr}${voffset 2}${font Liberation Sans:Bold:size=6}Running: ${color2}$running_processes$color
+###############
+# - NETWORK - #
+###############
+${font Liberation Sans:style=Bold:size=8}${voffset 10}RED $hr${font}
+${voffset 0}
+${font Liberation Sans:style=Bold:size=6}Descarga: ${font}${alignr}${color2}${downspeed wlp1s0} ${font}${alignr}${color} Total: ${font}${alignr}${color2}${totaldown wlp1s0}${color}
+${downspeedgraph wlp1s0}
+${font Liberation Sans:style=Bold:size=6}Subida: ${font}${alignr}${color2} ${upspeed wlp1s0} ${font}${alignr}${color} Total: ${font}${alignr}${color2}${totalup wlp1s0}${color}
+${upspeedgraph wlp1s0}
+
+${goto 5}${font Liberation Sans:style=Bold:size=6}LOCAL IP:${font}${alignr}${color2} ${addr wlp1s0}${color}
+${goto 5}${font Liberation Sans:style=Bold:size=6}PUBLIC IP:${font}${alignr}${color2} ${execi 60 curl ipinfo.io/ip}${color}
+${goto 5}${font Liberation Sans:style=Bold:size=6}${font}${alignr}${color2}${exec hwinfo --short --netcard | cut -c 24-52}${color}
+################
+# - DISK I/O - #
+################
+${font Liberation Sans:style=Bold:size=8}${voffset 10}DISK $hr${font}
+${voffset 14}${font Liberation Sans:style=Bold:size=6}SSD:$alignr${font}${font Liberation Sans:size=6}${color2}${fs_used /} / ${fs_size /}${font}${color}
+${fs_bar /}
+${voffset 0}${font Liberation Sans:style=Bold:size=6}/HOME:$alignr${font}${font Liberation Sans:size=6}${color2}${fs_used /home} / ${fs_size /home}${font}${color}
+${fs_bar /home}
+#${voffset 2}${font Liberation Sans:style=Bold:size=6}Total I/O:  ${font}${font Liberation Sans:size=6}${color2}${alignr}${diskio sda}${font}${color}
+#${voffset 2}${font Liberation Sans:style=Bold:size=6}Read I/O:  ${font}${font Liberation Sans:size=6}${color2}$alignr${diskio_read sda}${color}
+#${voffset 2}${font Liberation Sans:style=Bold:size=6}Write I/O:  ${font}${font Liberation Sans:size=6}${color2}$alignr${diskio_write sda}
