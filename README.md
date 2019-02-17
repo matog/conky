@@ -11,6 +11,11 @@ Muestra el consumo de CPU y RAM, procesos corriendo, información sobre la conex
 Funciona en mi notebook corriendo Ubuntu 18.10, no doy garantías que funcione en la tuya :p
 
 # Instalación
-Copiar el archivo conkyrc a /~.
-Renombrarlo a .conkyrc, para ocultarlo. Para mostrar archivos ocultos, presionar ctrl+H en Nautilus.
+En distribuciones con derivadas de Debian:
+
+```sudo apt-get install conky conky-all```
+
+Copiar el archivo conkyrc a ```/~```.
+Renombrarlo a ```.conkyrc```, para ocultarlo. Para mostrar archivos ocultos, presionar ```ctrl+H``` en Nautilus.
+Luego, agregar ```conky``` en ```Aplicaciones al Inicio```.
 
